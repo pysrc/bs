@@ -133,3 +133,8 @@ func TestUniqueTag(t *testing.T) {
 		}
 	}
 }
+func TestRegex(t *testing.T) { // 测试正则
+	for i, j := range soup.SelById("lin.*") {
+		fmt.Println("正则", i, j.Value)
+	}
+}

@@ -30,6 +30,7 @@ and they lived at the bottom of a well.</p>
 
 func main() {
 	soup := bs.Init(html_doc)
+  
 	// 找出所有 a 标签的链接
 	for i, j := range soup.SelByTag("a") {
 		fmt.Println(i, (*j.Attrs)["href"])
@@ -49,11 +50,20 @@ func main() {
 		}
 	}
 	/*Output:
-	0 Tag p
-	0 son Elsie
-	1 son Lacie
-	2 son Tillie
-	1 Tag p
+	  0 Tag p
+	  0 son Elsie
+	  1 son Lacie
+	  2 son Tillie
+	  1 Tag p
+	*/
+  
+	for _, j := range soup.SelById("lin.*") { // 使用正则匹配
+		fmt.Println("regex", j.Tag, j.Value)
+	}
+	/*Output:
+	    regex a Elsie
+		regex a Lacie
+		regex a Tillie
 	*/
 
 }

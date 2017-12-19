@@ -66,7 +66,8 @@ func (self *Soup) setHtml(text string) {
 func right(cur *map[string]string, attrs *map[string]string) bool {
 	// cur 包含 attrs 则返回true
 	for k, v := range *attrs {
-		if (*cur)[k] != v {
+		res, _ := regexp.MatchString(v, (*cur)[k]) // 正则匹配
+		if !res {
 			return false
 		}
 	}
