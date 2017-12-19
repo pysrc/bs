@@ -1,6 +1,7 @@
 package bs
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -32,103 +33,103 @@ var soup = Init(html)
 func TestAll(t *testing.T) {
 
 	// by tag
-	t.Log("By Tag........................")
+	fmt.Println("By Tag........................")
 	for _, j := range soup.Sel("a", nil) {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		fmt.Println("Value:", j.Value)
 	}
 	// by attrs
-	t.Log("By Attrs........................")
+	fmt.Println("By Attrs........................")
 	for _, j := range soup.Sel("", &map[string]string{"class": "story"}) {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		fmt.Println("Value:", j.Value)
 	}
 	// by tag and attrs
-	t.Log("By Tag And Attrs........................")
+	fmt.Println("By Tag And Attrs........................")
 	for _, j := range soup.Sel("p", &map[string]string{"class": "story"}) {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		fmt.Println("Value:", j.Value)
 	}
 
 	// more
-	t.Log("More.......................................")
+	fmt.Println("More.......................................")
 	for _, j := range soup.Sel("", &map[string]string{"id": "sp"}) {
 		for _, a := range j.Sel("a", nil) {
-			t.Log("Tag:", a.Tag)
-			t.Log("Attrs:", *a.Attrs)
-			t.Log("Value:", a.Value)
+			fmt.Println("Tag:", a.Tag)
+			fmt.Println("Attrs:", *a.Attrs)
+			fmt.Println("Value:", a.Value)
 		}
 	}
 	// Detail
-	t.Log("Soup Details....................................")
+	fmt.Println("Soup Details....................................")
 	for _, j := range soup.SelById("sp") {
-		t.Log("Tag:", j.Tag)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 
 	}
 	for _, j := range soup.SelByClass("sister") {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 	}
 	for _, j := range soup.SelByTag("title") {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 	}
-	t.Log("Node Details....................................")
+	fmt.Println("Node Details....................................")
 	note := soup.SelById("sp")[0]
 	for _, j := range note.SelByClass("sister") {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 	}
 	for _, j := range note.SelById("link3") {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 	}
 	for _, j := range note.SelByTag("a") {
-		t.Log("Tag:", j.Tag)
-		t.Log("Attrs:", *j.Attrs)
-		// t.Log("Attrs:", *j.Attrs)
-		// t.Log("Value:", j.Value)
+		fmt.Println("Tag:", j.Tag)
+		fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Attrs:", *j.Attrs)
+		// fmt.Println("Value:", j.Value)
 	}
 }
 
 func TestTag(t *testing.T) {
 	n := soup.SelByTag("ul")[0]
 	for _, i := range n.Sons {
-		t.Log(i.Value)
+		fmt.Println(i.Value)
 	}
 }
 
 func TestId(t *testing.T) {
 	n := soup.SelById("sp")[0]
 	for _, i := range n.Sons {
-		t.Log(i.Tag)
+		fmt.Println(i.Tag)
 	}
 }
 
 func TestInnerTag(t *testing.T) {
 	n := soup.SelByTag("ul")[0]
 	for _, j := range n.SelByTag("li") {
-		t.Log(j.Value)
+		fmt.Println(j.Value)
 	}
 }
 func TestUniqueTag(t *testing.T) {
-	t.Log((*soup.SelByTag("img")[0].Attrs)["src"])
+	fmt.Println((*soup.SelByTag("img")[0].Attrs)["src"])
 	for _, li := range soup.SelByTag("li") { // 2 times
 		if ts := li.SelByTag("img"); len(ts) > 0 {
-			t.Log(ts[0].Attrs)
+			fmt.Println(ts[0].Attrs)
 		}
 	}
 }

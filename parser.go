@@ -117,7 +117,7 @@ func (self *Soup) Sel(tag string, attrs *map[string]string) (nodes []*Node) {
 	cur := 0
 	leng := len(self.index)
 	for cur < leng {
-		if tag != "" && tag != self.nodes[cur].Tag { // 标签不匹配
+		if tag != "" && tag != self.nodes[cur].Tag || self.nodes[cur].ntype == -1 { // 标签不匹配
 			cur++
 			continue
 		}
@@ -136,6 +136,9 @@ func (self *Soup) Sel(tag string, attrs *map[string]string) (nodes []*Node) {
 
 func itool(n *Node, tag string, attrs *map[string]string, nodes *[]*Node) {
 	for _, i := range n.Sons {
+		if i.ntype == -1 { // 结束节点不解析
+			continue
+		}
 		if (i.Tag == tag || tag == "") && (attrs != nil && right(i.Attrs, attrs) || attrs == nil) {
 			*nodes = append(*nodes, i)
 		}
