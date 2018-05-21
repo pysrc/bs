@@ -25,7 +25,6 @@ func Init(r io.Reader) *Soup { // 初始化Soup
 	sp := Soup{}
 	html, _ := ioutil.ReadAll(r)
 	sp.setHtml(string(html))
-	fmt.Println(string(html))
 	return &sp
 }
 
