@@ -2,6 +2,7 @@ package bs
 
 import (
 	"fmt"
+	"net/http"
 	"testing"
 )
 
@@ -27,11 +28,11 @@ and they lived at the bottom of a well.
 	<li class="t" id="4">3</li>
 </ul>
 `
-
-var soup = Init(html)
+var resp, err = http.Get("http://192.168.0.49/a.html")
+var soup = Init(resp.Body)
 
 func TestAll(t *testing.T) {
-
+	defer resp.Body.Close()
 	// by tag
 	fmt.Println("By Tag........................")
 	for _, j := range soup.Sel("a", nil) {

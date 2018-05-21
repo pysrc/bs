@@ -3,6 +3,8 @@ package bs
 import (
 	"container/list"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"regexp"
 	"strings"
 )
@@ -19,9 +21,10 @@ func out(s string) {
 	}
 }
 
-func Init(html string) *Soup { // 初始化Soup
+func Init(r io.Reader) *Soup { // 初始化Soup
 	sp := Soup{}
-	sp.setHtml(html)
+	html, _ := ioutil.ReadAll(r)
+	sp.setHtml(string(html))
 	return &sp
 }
 
