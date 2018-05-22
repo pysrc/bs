@@ -1,5 +1,7 @@
 package bs
 
+type Obj interface{}
+
 type SelFunc interface {
 	Sel(tag string, attrs *map[string]string) (nodes []*Node) // 只提供给user此方法
 	SelById(id string) []*Node

@@ -138,3 +138,10 @@ func TestRegex(t *testing.T) { // 测试正则
 		fmt.Println("正则", i, j.Value)
 	}
 }
+func TestUrl(t *testing.T) {
+	sp := Init("https://github.com/")
+	// fmt.Println(sp.html)
+	for _, j := range sp.Sel("title", nil) {
+		fmt.Println("title:", j.Value)
+	}
+}

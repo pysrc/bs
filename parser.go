@@ -3,6 +3,9 @@ package bs
 import (
 	"container/list"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
 	"regexp"
 	"strings"
 )
@@ -18,9 +21,45 @@ func out(s string) {
 		fmt.Println(s)
 	}
 }
-
-func Init(html string) *Soup { // 初始化Soup
+func isUrl(txt string) bool { // 判断是不是网址
+	is, _ := regexp.MatchString(`^https{0,}?://.*`, txt)
+	return is
+}
+func Init(obj Obj) *Soup { // 初始化Soup
 	sp := Soup{}
+	var html string
+	switch obj.(type) {
+	case string:
+		osr := obj.(string)
+		if isUrl(osr) { // 传入的是一个网址
+			resp, err1 := http.Get(osr)
+			if err1 != nil {
+				return &sp
+			}
+			defer resp.Body.Close()
+			data, err2 := ioutil.ReadAll(resp.Body)
+			if err2 != nil {
+				return &sp
+			}
+			html = string(data)
+		} else { // 传入的是一个html字符串
+			html = osr
+		}
+	case http.Response:
+		o := obj.(http.Response)
+		data, err2 := ioutil.ReadAll(o.Body)
+		if err2 != nil {
+			return &sp
+		}
+		html = string(data)
+	case io.ReadCloser:
+		o := obj.(io.ReadCloser)
+		data, err2 := ioutil.ReadAll(o)
+		if err2 != nil {
+			return &sp
+		}
+		html = string(data)
+	}
 	sp.setHtml(html)
 	return &sp
 }
