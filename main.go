@@ -1,12 +1,3 @@
-# A Simple HTML-Parser
-
-**安装：**  `go get github.com/pysrc/bs` 
-
-
-
-## 快速开始
-
-```go
 package main
 
 import (
@@ -75,39 +66,3 @@ func main() {
 	  title: 1clr-code-hosting
 	*/
 }
-
-```
-
-
-
-## 可用接口
-
-
-
-### 1.方法
-
-
-
-```go
-type SelFunc interface {
-	Sel(tag string, attrs *map[string]string) (nodes []*Node)
-	SelById(id string) []*Node
-	SelByTag(tag string) []*Node
-	SelByClass(class string) []*Node
-	SelByName(name string) []*Node
-}
-```
-
-
-
-### 2.可操作属性
-
-```go
-type Node struct { // 基本节点结构
-	Tag   string             // 标签名
-	Attrs *map[string]string //属性
-	Value string             // 此节点的值
-	Sons  []*Node            // 子节点
-}
-```
-
